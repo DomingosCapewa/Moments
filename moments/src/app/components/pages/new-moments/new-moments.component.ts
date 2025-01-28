@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Moments } from 'src/app/moments';
 
+import { MomentService } from 'src/app/services/moment.service';
+
+
 @Component({
   selector: 'app-new-moments',
   templateUrl: './new-moments.component.html',
@@ -8,7 +11,7 @@ import { Moments } from 'src/app/moments';
 })
 export class NewMomentsComponent implements OnInit {
   btnText = 'Compartilhar!';
-  constructor() {}
+  constructor(private momentService: MomentService) {}
 
   ngOnInit(): void {}
   async createHandler(moment: Moments) {
@@ -20,5 +23,6 @@ export class NewMomentsComponent implements OnInit {
     if (moment.image) {
       formData.append('image', moment.image);
     }
+    await this.momentService.createMoment(formData).subscribe()
   }
 }
